@@ -11,7 +11,7 @@ const Contect = () => {
     const message = e.target[4].value;
     const data = { firstName, lastName, email, subject, message };
 
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const API_URL = import.meta.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     fetch(`${API_URL}/api/user/details`, {
       method: "POST",
       headers: {
