@@ -1,7 +1,7 @@
 import React from "react";
 
 const Contect = () => {
-  function handleform(e) {
+  async function handleform(e) {
     e.preventDefault();
 
     const firstName = e.target[0].value;
@@ -11,25 +11,25 @@ const Contect = () => {
     const message = e.target[4].value;
     const data = { firstName, lastName, email, subject, message };
 
-    const API_URL = import.meta.env.VITE_API_URL 
-    fetch(`${API_URL}/api/user/details`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Message sent successfully!");
-        e.target.reset();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error sending message.");
+    const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+    try {
+      const res = await fetch(`${API_URL}/api/user/details`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
+      const resData = await res.json();
+      console.log("Success:", resData);
+      alert("Message sent successfully!");
+      e.target.reset();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error sending message.");
+    }
+      
+     
   }
   return (
     <>
